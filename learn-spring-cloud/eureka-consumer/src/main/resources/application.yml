@@ -1,0 +1,12 @@
+
+spring:
+  application:
+    name: eureka-consumer
+server:
+  port: 9003
+eureka:
+  client:
+    # this.serviceUrl.put(DEFAULT_ZONE, DEFAULT_URL);
+    service-url:
+      # DEFAULT_URL = "http://localhost:8761" + DEFAULT_PREFIX
+      defaultZone: http://localhost:9001/eureka/

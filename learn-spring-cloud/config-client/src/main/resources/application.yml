@@ -1,0 +1,7 @@
+server:
+  port: 9006
+management:
+  endpoints:
+    web:
+      exposure:
+        include: env,beans,health,info,refresh

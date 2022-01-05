@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        # because github create default branch name from master to main
+        # please checkout a new branch named master manually
+        git:
+          uri: https://github.com/tangwenixng/learn-sc-config-server
+          skipSslValidation: true
+          username: twx843571091@gmail.com
+          password: 474913884ynh
+          # Time (in seconds) between refresh of the git repository
+          refresh-rate: 30
+

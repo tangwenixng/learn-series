@@ -1,0 +1,14 @@
+server:
+  port: 9001
+spring:
+  application:
+    name: eureka-server
+eureka:
+  instance:
+    #The hostname if it can be determined at configuration time (otherwise it will be guessed from OS primitives).
+    hostname: localhost
+  client:
+    #Indicates whether or not this instance should register its information with eureka server for discovery by others.
+    register-with-eureka: false
+    #ndicates whether this client should fetch eureka registry information from eureka server
+    fetch-registry: false
