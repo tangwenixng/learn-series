@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.twx.learnmybatisplus.db.mysql.TestMapper">
+
+    <resultMap id="dogMap" type="Dog">
+        <id property="id" column="id"/>
+        <result property="time" column="atime" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="findDogs" resultType="Dog">
+        SELECT id,username as name,created_time as time
+        FROM t_manager
+    </select>
+</mapper>
