@@ -17,7 +17,9 @@ func main() {
 	printSlice(s) //len=4 cap=6 [2 3 5 7]
 
 	// 舍弃前两个值
-	//todo 这里不能理解为什么cap变4了
+	//这里不能理解为什么cap变4了？
+	//看这篇文章的分析==> https://www.cnblogs.com/OctoptusLian/p/9205326.html
+	//容量=4 是【末指针-开始指针】即 【6-2】=4
 	s = s[2:]
 	printSlice(s) //len=2 cap=4 [5 7]
 
