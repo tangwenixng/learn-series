@@ -1,0 +1,17 @@
+# DataSource Config
+spring:
+  datasource:
+    dynamic:
+      primary: master
+      strict: false
+      datasource:
+        master:
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          username: root
+          password: ****
+          url: jdbc:mysql://172.26.1.22:3306/acdm?serverTimezone=Asia/Shanghai&useSSL=false&autoReconnect=true&useUnicode=true&characterEncoding=utf8
+        slave_1:
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          username: root
+          password: ****
+          url: jdbc:mysql://172.26.1.22:3306/test?serverTimezone=Asia/Shanghai&useSSL=false&autoReconnect=true&useUnicode=true&characterEncoding=utf8
