@@ -40,6 +40,13 @@
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
+
+    <dependency>
+      <groupId>org.apache.skywalking</groupId>
+      <artifactId>apm-toolkit-logback-1.x</artifactId>
+      <version>8.10.0</version>
+    </dependency>
+
   </dependencies>
 
   <build>
