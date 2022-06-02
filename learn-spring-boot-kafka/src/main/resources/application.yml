@@ -1,0 +1,11 @@
+spring:
+  kafka:
+    bootstrap-servers: localhost:9092
+    listener:
+      ack-mode: manual
+      type: batch
+    consumer:
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      group-id: mac-twx
+      max-poll-records: 3
