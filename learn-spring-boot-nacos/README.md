@@ -108,4 +108,4 @@ public void run(String... args) throws Exception {
 感悟：
 1. 使用spring-boot集成注册中心，需要手动编写服务注册代码。这一块体验不是很好。感觉还是使用spring-cloud-starter比较智能！
 
-源码地址:  https://github.com/tangwenixng/learn-series/learn-spring-boot-nacos
+源码地址:  https://github.com/tangwenixng/learn-series/
