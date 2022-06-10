@@ -290,4 +290,4 @@ public class SzAsCamera implements IAsCamara {
 
 ---
 
-示例源码：https://github.com/tangwenixng/learn-series/learn-spring-boot-starter/README.md
+示例源码：https://github.com/tangwenixng/learn-series/blob/master/learn-spring-boot-starter/README.md
