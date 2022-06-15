@@ -1,0 +1,17 @@
+xxl:
+  job:
+    accessToken:
+    admin:
+      addresses: http://172.26.1.80:8080/xxl-job-admin
+    executor:
+      appname: learn-xxl-job
+      ### xxl-job executor registry-address: default use address to registry ,
+      ### otherwise use ip:port if address is null
+      address:
+      ip:
+      #???9999
+      port: 9999
+      logpath: ./log/xxl-job/jobhandler
+      logretentiondays: 30
+server:
+  port: 1101
