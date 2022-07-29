@@ -37,8 +37,9 @@ public class WarnDic implements Serializable {
      */
     private String type;
 
+    @Column(columnDefinition="DATETIME DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createTime;
-
+    @Column(columnDefinition="DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private LocalDateTime updateTime;
 
     public Integer getId() {

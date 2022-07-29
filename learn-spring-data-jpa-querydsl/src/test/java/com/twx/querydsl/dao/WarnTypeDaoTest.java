@@ -29,7 +29,6 @@ class WarnTypeDaoTest {
                 .from(warnType)
                 .innerJoin(warnDic)
                 .on(warnType.behaviorId.eq(warnDic.id))
-//                .where(warnType.id.eq(9))
                 .fetch();
         list.forEach(System.out::println);
         assertEquals(17, list.size());
