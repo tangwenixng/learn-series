@@ -13,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 class WarnTypeDaoTest {
     @Autowired
     WarnTypeDao warnTypeDao;
@@ -21,6 +21,9 @@ class WarnTypeDaoTest {
     @Autowired
     JPAQueryFactory queryFactory;
 
+    /**
+     * 联表查询
+     */
     @Test
     public void multiTable() {
         QWarnType warnType = QWarnType.warnType;
@@ -30,7 +33,6 @@ class WarnTypeDaoTest {
                 .innerJoin(warnDic)
                 .on(warnType.behaviorId.eq(warnDic.id))
                 .fetch();
-        list.forEach(System.out::println);
         assertEquals(17, list.size());
     }
 

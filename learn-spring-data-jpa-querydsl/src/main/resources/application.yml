@@ -2,10 +2,12 @@ spring:
   datasource:
     username: ${MYSQL_USERNAME:root}
     password: ${MYSQL_PASSWORD:Password2017}
-    url: jdbc:mysql://${MYSQL_HOST:172.26.1.22}:3306/querydsl?serverTimezone=Asia/Shanghai&useSSL=false&autoReconnect=true&useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://${MYSQL_HOST:172.26.1.22}:3306/airport-safe-server-plus?serverTimezone=Asia/Shanghai&useSSL=false&autoReconnect=true&useUnicode=true&characterEncoding=utf8
     hikari:
       max-lifetime: 600000
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
+  main:
+    lazy-initialization: true
