@@ -6,6 +6,8 @@ package com.twx.learn.sentinel.service;
  */
 public interface IProjectMetaService {
 
+    String sentinelDemo();
+
     String test(String key);
 
     void register(String key,Integer count);

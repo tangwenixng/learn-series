@@ -17,11 +17,21 @@ spring:
     sentinel:
       transport:
         port: 8719
-        dashboard: localhost:8080
-#  配置redis
+        dashboard: localhost:8858
+      datasource:
+        ds1:
+          nacos:
+            server-addr: localhost:8848
+            data-id: learn-sentinel
+            group-id: DEFAULT_GROUP
+            data-type: json
+            rule-type: flow
+      eager: true
+  #  配置redis
   redis:
-    host: 127.0.0.1
+    host: 47.96.98.119
     port: 6379
+    password: ******
     database: 0
     lettuce:
       shutdown-timeout: 200ms
@@ -30,3 +40,4 @@ spring:
         max-idle: 7
         min-idle: 2
         max-wait: -1ms
+

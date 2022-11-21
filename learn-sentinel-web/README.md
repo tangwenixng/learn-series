@@ -196,6 +196,79 @@ public class IndexController {
 注意，失败8次。（均是因为超过调用次数导致）
 
 
+## Sentinel集成示例
+1. 依赖
+```xml
+ <dependency>
+    <groupId>com.alibaba.cloud</groupId>
+    <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+    <version>2.2.1.RELEASE</version>
+  </dependency>
+
+  <dependency>
+    <groupId>com.alibaba.csp</groupId>
+    <artifactId>sentinel-datasource-nacos</artifactId>
+    <version>1.7.1</version>
+  </dependency>
+```
+2. 配置
+```yaml
+spring:
+  cloud:
+    sentinel:
+      transport:
+        port: 8719
+        dashboard: localhost:8858
+      datasource:
+        ds1:
+          nacos:
+            server-addr: localhost:8848
+            data-id: learn-sentinel
+            group-id: DEFAULT_GROUP
+            data-type: json
+            rule-type: flow
+      eager: true
+```
+3. 在nacos中创建配置;data-id=learn-sentinel,内容格式
+```json
+[
+  {
+    "resource": "sentinel-demo",
+    "controlBehavior": 0,
+    "count": 3,
+    "grade": 1,
+    "limitApp": "default",
+    "strategy": 0
+  }
+]
+```
+QPS设置为3
+
+4. 使用
+```java
+/**
+ * sentinel入门示例,示例中的资源名是sentinel-demo,
+ * 可以在sentinel-dashboard配置sentinel-demo的规则
+ * 也可以在nacos中配置sentinel-demo的规则
+ * 在nacos配置sentinel规则需要引入sentinel-datasource-nacos依赖
+ * 流控规则示例请参考 src/main/resources/learn-sentinel.json
+ * @return
+ */
+@Override
+@SentinelResource(value = "sentinel-demo", blockHandler = "failHandler")
+public String sentinelDemo() {
+    return "OK";
+}
+
+public String failHandler(BlockException ex) {
+    ex.printStackTrace();
+    if (ex != null) {
+        FlowException fEx = (FlowException) ex;
+        System.err.println("err occur "+fEx.getRule().getResource());
+    }
+    return "ex occur";
+}
+```
 
 ## 仓库地址
 

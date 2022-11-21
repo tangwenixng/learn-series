@@ -15,6 +15,12 @@ public class IndexController {
     @Autowired
     private IProjectMetaService service;
 
+
+    @GetMapping("/sentinel-demo")
+    public String sentinelDemo() {
+        return service.sentinelDemo();
+    }
+
     @GetMapping("/test")
     public String test(@RequestParam("key")String key) {
         return service.test(key);
