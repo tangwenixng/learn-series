@@ -3,6 +3,8 @@ package com.twx.learn;
 import com.twx.learn.verticle.MyVerticle;
 import com.twx.learn.verticle.WorkVerticle;
 import io.vertx.core.*;
+import io.vertx.core.eventbus.EventBus;
+import io.vertx.core.eventbus.MessageConsumer;
 import io.vertx.core.file.FileProps;
 import io.vertx.core.file.FileSystem;
 import io.vertx.core.json.JsonObject;
@@ -18,7 +20,7 @@ public class App {
         options.setWorkerPoolSize(10);
 
         Vertx vertx = Vertx.vertx(options);
-        vertx.setPeriodic(1000, id -> System.out.println(Thread.currentThread().getName() + " timer fired!"));
+        //vertx.setPeriodic(1000, id -> System.out.println(Thread.currentThread().getName() + " timer fired!"));
         //这种方式创建的是Standard Verticle；
         //Standard Verticle会分配给一个Event Loop线程执行，并且保证所有的代码都是在相同 Event Loop中执行。
         vertx.deployVerticle(new MyVerticle(), res -> {
@@ -55,6 +57,29 @@ public class App {
 
         vertx.getOrCreateContext().runOnContext(event -> System.out.println(
                 Thread.currentThread().getName()+" This will be executed asynchronously in the same context"));
+
+        EventBus eventBus = vertx.eventBus();
+        MessageConsumer<Object> consumer1 = eventBus.consumer("news.uk.sport",
+                message -> {
+                    System.out.println("Consumer1===> I have received a message: " + message.body());
+                    //应答消息
+                    message.reply("From Consumer1===> how interesting!");
+                });
+        MessageConsumer<Object> consumer2 = eventBus.consumer("news.uk.sport",
+                message -> {
+                    System.out.println("Consumer2===> I have received a message: " + message.body());
+                    message.reply("From Consumer2===> how interesting!");
+                });
+        //通过publish，所有的consumer都能接受到消息
+//        eventBus.publish("news.uk.sport", "Yay! Someone kicked a ball");
+        //仅一个处理器能够接收到发送的消息;Vert.x 使用不严格的轮询算法来选择绑定的处理器
+//        eventBus.send("news.uk.sport", "Yay! Someone kicked a ball");
+        //发送消息并接收应答;request等同于send，但是它可以接收应答
+        eventBus.request("news.uk.sport", "Yay! Someone kicked a ball", reply -> {
+            if (reply.succeeded()) {
+                System.out.println("Received reply: " + reply.result().body());
+            }
+        });
 
         //集群模式的Vert.x对象
         /*Vertx.clusteredVertx(options, result -> {
