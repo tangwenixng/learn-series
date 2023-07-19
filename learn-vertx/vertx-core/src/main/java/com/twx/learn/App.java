@@ -1,5 +1,7 @@
 package com.twx.learn;
 
+import com.twx.learn.tcp.MyNetClient;
+import com.twx.learn.tcp.MyNetServer;
 import com.twx.learn.verticle.MyVerticle;
 import com.twx.learn.verticle.WorkVerticle;
 import io.vertx.core.*;
@@ -7,6 +9,7 @@ import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.eventbus.MessageConsumer;
 import io.vertx.core.file.FileProps;
 import io.vertx.core.file.FileSystem;
+import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
 
 import java.util.function.Function;
@@ -81,6 +84,8 @@ public class App {
             }
         });
 
+        new MyNetServer(vertx).start();
+        new MyNetClient(vertx).connect();
         //集群模式的Vert.x对象
         /*Vertx.clusteredVertx(options, result -> {
             if (result.succeeded()) {
