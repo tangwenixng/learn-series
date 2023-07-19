@@ -1,0 +1,9 @@
+
+spring:
+  thymeleaf:
+    enabled: true
+    cache: false
+    encoding: utf-8
+    suffix: .html
+server:
+  port: 8092
