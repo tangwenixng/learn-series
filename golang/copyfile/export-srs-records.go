@@ -21,6 +21,7 @@ func main() {
 	for {
 		fmt.Println(time.Now().Format("2006-01-02 15:04:05"))
 		scanDir(os.Args[1])
+		//使用 <-timeTickerChan从时间间隔通道接收一个消息，该操作会阻塞程序，直到时间间隔到达
 		<-timeTickerChan
 	}
 }
