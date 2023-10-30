@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:mysql://172.26.10.100:3306/oauth?useUnicode=true&characterEncoding=UTF-8&serverTimeZone=Asia/Shanghai
+    username: root
+    password: Pass2017
+  main:
+    allow-bean-definition-overriding: true
+
+
