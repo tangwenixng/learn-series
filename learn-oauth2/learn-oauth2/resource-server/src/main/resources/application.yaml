@@ -1,0 +1,26 @@
+server:
+  port: 8081
+#spring:
+#  application:
+#    name: client-user
+#  redis:
+#    password: Pass2017
+#    host: 172.26.1.35
+#    port: 6379
+#    database: 2
+#
+#security:
+#  oauth2:
+#    client:
+#      client-id: javaboy
+#      client-secret: 123
+#      # 密码模式需要用到的获取token的接口
+#      access-token-uri: http://localhost:8080/oauth/token
+#      # 授权码认证方式需要的
+#      user-authorization-uri: http://localhost:8080/oauth/authorize
+#    resource:
+#      id: res1
+#      user-info-uri: user-info
+#    authorization:
+#      # 需要拿着请求中的 token 到认证服务端做 token 验证
+#      check-token-access: http://localhost:8080/oauth/check_token
