@@ -1,6 +1,6 @@
 什么是OAuth2?
 - 概念性的东西就不讲了。我们常见的第三方登录，比如QQ、微信、Github等使用的就是OAuth2。
-    
+
 OAuth2有四种模式:
 - `授权码模式`：**最重要，最通用** 。
 - `简化模式`:  直接在浏览器中向授权服务器申请令牌（token）
@@ -28,7 +28,7 @@ OAuth2有四种模式:
 - client_secret: 123
 - username: admin
 - password: 123
-    
+
 接口直接返回token值:
 ```json
   {
@@ -39,7 +39,7 @@ OAuth2有四种模式:
   "scope": "all"
   }
   ```
-    
+
 3. **客户端模式**
 ```text
   POST /oauth/token?grant_type=client_credentials&client_id=u_client&client_secret=123
@@ -58,14 +58,14 @@ OAuth2有四种模式:
   "scope": "all"
   }
   ```
-    
+
 ## 认证&资源服务(分离)
 ### 认证服务
 
- 下面将演示如何搭建基于JWT token的认证服务:
+下面将演示如何搭建基于JWT token的认证服务:
 
 1. **引入依赖**
-  logseq.order-list-type:: number
+   logseq.order-list-type:: number
 ```xml
   <dependency>
     <groupId>org.springframework.boot</groupId>
@@ -116,7 +116,7 @@ OAuth2有四种模式:
   INSERT INTO `oauth_client_details` (`client_id`, `resource_ids`, `client_secret`, `scope`, `authorized_grant_types`, `web_server_redirect_uri`, `authorities`, `access_token_validity`, `refresh_token_validity`, `additional_information`, `autoapprove`) VALUES ('implicit', 'res2', '$2a$10$BGRoWYPm9B1CJRcHJYV9BOyGbWVKOr9S.E5OFotqw9a9nsR0zeH8u', 'all', 'implicit,refresh_token', 'http://localhost:8081/index.html', NULL, 7200, 259200, NULL, NULL);
   INSERT INTO `oauth_client_details` (`client_id`, `resource_ids`, `client_secret`, `scope`, `authorized_grant_types`, `web_server_redirect_uri`, `authorities`, `access_token_validity`, `refresh_token_validity`, `additional_information`, `autoapprove`) VALUES ('javaboy', 'res1', '$2a$10$BGRoWYPm9B1CJRcHJYV9BOyGbWVKOr9S.E5OFotqw9a9nsR0zeH8u', 'all', 'authorization_code,refresh_token', 'http://localhost:8081/index.html', NULL, 7200, 259200, NULL, NULL);
   INSERT INTO `oauth_client_details` (`client_id`, `resource_ids`, `client_secret`, `scope`, `authorized_grant_types`, `web_server_redirect_uri`, `authorities`, `access_token_validity`, `refresh_token_validity`, `additional_information`, `autoapprove`) VALUES ('twx', 'res1', '$2a$10$BGRoWYPm9B1CJRcHJYV9BOyGbWVKOr9S.E5OFotqw9a9nsR0zeH8u', 'all', 'authorization_code,refresh_token', 'http://localhost:8081/index.html', NULL, 7200, 259200, NULL, NULL);
-  INSERT INTO `oauth_client_details` (`client_id`, `resource_ids`, `client_secret`, `scope`, `authorized_grant_types`, `web_server_redirect_uri`, `authorities`, `access_token_validity`, `refresh_token_validity`, `additional_information`, `autoapprove`) VALUES ('u_client', 'res4', '$2a$10$BGRoWYPm9B1CJRcHJYV9BOyGbWVKOr9S.E5OFotqw9a9nsR0zeH8u', 'all', 'client_credentials,refresh_token', 'http://localhost:8081/index.html', NULL, 7200, 259200, NULL, NULL);
+  INSERT INTO `oauth_client_details` (`client_id`, `resource_ids`, `client_secret`, `scope`, `authorized_grant_types`, `web_server_redirect_uri`, `authorities`, `access_token_validity`, `refresh_token_validity`, `additional_information`, `autoapprove`) VALUES ('u_client', 'res1,res4', '$2a$10$BGRoWYPm9B1CJRcHJYV9BOyGbWVKOr9S.E5OFotqw9a9nsR0zeH8u', 'all', 'client_credentials,refresh_token', 'http://localhost:8081/index.html', NULL, 7200, 259200, NULL, NULL);
   INSERT INTO `oauth_client_details` (`client_id`, `resource_ids`, `client_secret`, `scope`, `authorized_grant_types`, `web_server_redirect_uri`, `authorities`, `access_token_validity`, `refresh_token_validity`, `additional_information`, `autoapprove`) VALUES ('u_pwd', 'res3', '$2a$10$BGRoWYPm9B1CJRcHJYV9BOyGbWVKOr9S.E5OFotqw9a9nsR0zeH8u', 'all', 'password,refresh_token', 'http://localhost:8081/index.html', NULL, 7200, 259200, NULL, NULL);
   
   ```
@@ -133,7 +133,7 @@ OAuth2有四种模式:
     main:
       allow-bean-definition-overriding: true
   ```
-    
+
 4. **配置SpringSecurity**
 
 通过继承`WebSecurityConfigurerAdapter`并重写一些关键方法
@@ -180,7 +180,7 @@ OAuth2有四种模式:
   ![](https://slimteaegg-blog.oss-cn-shanghai.aliyuncs.com/picgo20231030153801.png)
 - `auth.userDetailsService(syUserDetailsService());` 配置使用`UserDetailsService`加载验证用户。
 - `http.csrf().disable().formLogin();`禁用跨站攻击和启用表单登录。
-    
+
 4.1 **简单实现`UserDetailsService`**
 ```java
   public class SyUserDetailService implements UserDetailsService {
@@ -274,7 +274,7 @@ OAuth2有四种模式:
 - `configure(AuthorizationServerEndpointsConfigurer endpoints)`: 配置认证管理器和`tokenService`
 - `configure(ClientDetailsServiceConfigurer clients)`: 配置客户端详情（从哪加载）
 - `configure(AuthorizationServerSecurityConfigurer security)`：配置令牌端点的安全约束，也就是这个端点谁能访问，谁不能访问。checkTokenAccess 是指一个 Token 校验的端点，这个端点我们设置为可以直接访问。（后面的资源服务器会访问这个端点进行token校验）
-    
+
 5.1 **配置TokenStore实例**
 
 我们配置从jwt生成token
@@ -303,3 +303,113 @@ OAuth2有四种模式:
 在`DefaultTokenServices#createAccessToken()`方法最后一行判断有没有`accessTokenEnhancer`。如果有就进行增强，即调用`TokenEnhancer#enhance()`。默认的`TokenEnhancer`实现是**TokenEnhancerChain**, 在它的`enhance()`方法里会遍历调用其他的`TokenEnhancer#enhance()`。由于`JwtAccessTokenConverter`实现了`TokenEnhancer`接口, 所以最终会进入到`JwtAccessTokenConverter`。（流程参见下图）
 
 ![](https://slimteaegg-blog.oss-cn-shanghai.aliyuncs.com/picgo20231030164418.png)
+
+
+### 资源服务
+
+**引入依赖**
+```xml
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-oauth2</artifactId>
+    </dependency>
+  </dependencies>
+  ```
+**2. 配置资源服务**
+通过继承`ResourceServerConfigurerAdapter`并重写几个方法
+```java
+  @Configuration
+  @EnableResourceServer
+  public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
+  
+      private final TokenStore tokenStore;
+  
+      public ResourceServerConfig(TokenStore tokenStore) {
+          this.tokenStore = tokenStore;
+      }
+  
+  
+      @Override
+      public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
+          resources.resourceId("res1").tokenStore(tokenStore);
+      }
+  
+      @Override
+      public void configure(HttpSecurity http) throws Exception {
+          http.authorizeRequests()
+                  .antMatchers("/admin/**").hasRole("admin")
+                  .anyRequest().authenticated();
+      }
+  }
+  ```
+- `@EnableResourceServer`: 启用资源服务器
+- `TokenStore tokenStore`: 注入`JwtTokenStore`, 同认证服务
+- `configure(ResourceServerSecurityConfigurer resources)`: 配置resourceId，即该服务对应的资源ID;设置 tokenStore如何解析jwt
+- `configure(HttpSecurity http)`: 配置哪些端点需要授权和认证
+
+**3. 配置TokenStore**
+
+将认证服务的`TokenStore`拷贝过来即可
+```java
+  @Configuration
+  public class AccessTokenConfig {
+      private String SIGNING_KEY = "javaboy";
+  
+      @Bean
+      TokenStore tokenStore() {
+          return new JwtTokenStore(jwtAccessTokenConverter());
+      }
+  
+      /**
+       * 将用户信息和 JWT 进行转换（将用户信息转为 jwt 字符串，或者从 jwt 字符串提取出用户信息）
+       */
+      @Bean
+      JwtAccessTokenConverter jwtAccessTokenConverter() {
+          JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+          converter.setSigningKey(SIGNING_KEY);
+          return converter;
+      }
+  }
+  ```
+**4. 编写测试接口**
+
+```java
+  @RestController
+  public class UserController {
+      @GetMapping("/hello")
+      public String hello() {
+          return "hello";
+      }
+      @GetMapping("/admin/hello")
+      public String admin() {
+          return "admin";
+      }
+  }
+  ```
+
+**5. 访问接口`/hello`**
+**5.1 无token**
+`GET http://localhost:8081/hello`
+返回值:
+```json
+  {
+    "error": "unauthorized",
+    "error_description": "Full authentication is required to access this resource"
+  }
+  ```
+
+**5.2 有token**
+```text
+  GET http://localhost:8081/hello
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsicmVzNCIsInJlczEiXSwic2NvcGUiOlsiYWxsIl0sImV4cCI6MTY5ODY2NDAxNiwianRpIjoiOWY0MjFlMWEtMDE3OC00NWRmLThmYmQtMTgwMTIyODAyMzExIiwiY2xpZW50X2lkIjoidV9jbGllbnQifQ.okvrNCWYUzs2gYBHgzYR51j7vbAj8ZzsLmVg__VulBo
+  
+  ```
+返回值:
+```text
+  hello
+  ```

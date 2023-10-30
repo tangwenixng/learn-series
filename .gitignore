@@ -6,3 +6,5 @@ learn-hutool/.idea
 learn-hutool/target
 learn-zk/.idea
 learn-base-kafka/learn-base-kafka/.idea
+learn-oauth2/learn-oauth2/.idea
+learn-oauth2/learn-oauth2/resource-server/.mvn
