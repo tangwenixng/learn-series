@@ -26,13 +26,10 @@ public class KafkaConsumerExample {
         }
 
 //        String bootstrapServers = "dev.soyuan.com.cn:9092"; // Kafka 服务器地址
-        String bootstrapServers = "172.26.10.100:9092"; // Kafka 服务器地址
-        String groupId = "my-group"; // 消费者组 ID
-        String topic = "twx003"; // Kafka 主题名称
+//        String bootstrapServers = "172.26.10.100:9092"; // Kafka 服务器地址
+        String topic = "T_TEST_005"; // Kafka 主题名称
 
         // Kafka 消费者配置
-        properties.put("bootstrap.servers", bootstrapServers);
-        properties.put("group.id", groupId);
         properties.put("key.deserializer", StringDeserializer.class.getName());
         properties.put("value.deserializer", StringDeserializer.class.getName());
 

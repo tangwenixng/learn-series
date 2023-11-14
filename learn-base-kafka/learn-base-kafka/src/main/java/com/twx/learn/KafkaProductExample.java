@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 public class KafkaProductExample {
     private static final Logger log = LoggerFactory.getLogger(KafkaProductExample.class);
@@ -23,20 +24,21 @@ public class KafkaProductExample {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        String bootstrapServers = "172.26.10.100:9092"; // Kafka 服务器地址
-        String topic = "twx003"; // Kafka 主题名称
+        String topic = "T_TEST_005"; // Kafka 主题名称
 
-        properties.put("bootstrap.servers", bootstrapServers);
         properties.put("key.serializer", StringSerializer.class.getName());
         properties.put("value.serializer", StringSerializer.class.getName());
 
         // 创建Kafka生产者
         try (KafkaProducer<String, String> producer = new KafkaProducer<>(properties)) {
-            ProducerRecord<String, String> record = new ProducerRecord<>(topic, LocalDateTime.now().toString());
-            // 发送消息
-            RecordMetadata metadata = producer.send(record).get();
-            System.out.printf("Message sent to topic=%s, partition=%s, offset=%s%n",
-                    metadata.topic(), metadata.partition(), metadata.offset());
+            for (int i = 0; i < 10; i++) {
+                ProducerRecord<String, String> record = new ProducerRecord<>(topic, LocalDateTime.now().toString());
+                // 发送消息
+                RecordMetadata metadata = producer.send(record).get();
+                System.out.printf("Message sent to topic=%s, partition=%s, offset=%s%n",
+                        metadata.topic(), metadata.partition(), metadata.offset());
+                TimeUnit.SECONDS.sleep(1);
+            }
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
