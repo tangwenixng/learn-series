@@ -1,0 +1,6 @@
+rocketmq:
+  name-server: localhost:9876
+  producer:
+    group: pd-group
+server:
+  port: 8321
