@@ -16,19 +16,25 @@ public class BaseProducer {
         try {
             //启动
             producer.start();
-            //创建消息：参数1-topic名称 参数2-tag名称 参数3-消息内容(byte[])
-            Message message = new Message("topic1", "tag1", LocalDateTime.now().toString().getBytes());
-            try {
-                //发送
-                producer.send(message);
-                System.out.println("Message sent successfully.");
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                producer.shutdown();
+
+            for (int i = 0; i < 1; i++) {
+                //创建消息：参数1-topic名称 参数2-tag名称 参数3-消息内容(byte[])
+                Message message = new Message("topic1", "tag2", LocalDateTime.now().toString().getBytes());
+                try {
+                    //发送
+//                    producer.send(message);
+                    producer.sendOneway(message);
+                    System.out.println("Message sent successfully.");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+
+                }
             }
         } catch (MQClientException e) {
             e.printStackTrace();
+        } finally {
+            producer.shutdown();
         }
     }
 }

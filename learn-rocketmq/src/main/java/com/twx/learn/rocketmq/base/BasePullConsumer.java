@@ -1,13 +1,11 @@
 package com.twx.learn.rocketmq.base;
 
 import org.apache.rocketmq.client.consumer.DefaultLitePullConsumer;
-import org.apache.rocketmq.client.consumer.DefaultMQPullConsumer;
-import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
-import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
-import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
+import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.common.message.MessageExt;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class BasePullConsumer {
     public static void main(String[] args) throws Exception {
@@ -22,12 +20,27 @@ public class BasePullConsumer {
         // 启动消费者
         consumer.start();
 
+        //模拟外部API修改订阅topic
+        new Thread(() -> {
+            try {
+                TimeUnit.SECONDS.sleep(60);
+                System.out.println("开始变更订阅...");
+                consumer.unsubscribe("topic1");
+                consumer.subscribe("topic2", "*");
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            } catch (MQClientException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
+
         // 拉取消息
         while (true) {
             List<MessageExt> messages = consumer.poll(1000);
-            for (MessageExt message : messages) {
+            for (MessageExt msg : messages) {
                 // 处理接收到的消息
-                System.out.println("BasePull message: " + new String(message.getBody()));
+                System.out.println(Thread.currentThread().getName()+ " BasePull topic:" + msg.getTopic() + ", tag: " + msg.getTags() +
+                        " ,message: " + new String(msg.getBody()));
             }
         }
     }
