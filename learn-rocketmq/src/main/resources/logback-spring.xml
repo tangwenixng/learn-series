@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration  scan="true" scanPeriod="60 seconds" debug="false">
+    <contextName>learn-rk</contextName>
+    <property name="LOG_PATH" value="${RK_LOG:-log}" />
+    <property name="commonPattern" value="%date{yyyy-MM-dd HH:mm:ss} %highlight(%-5level) [%thread{10}] %boldMagenta(%logger{26}):%method-%line:%cyan(%marker %msg%n)" />
+    <property name="filePattern" value="%date{yyyy-MM-dd HH:mm:ss} %-5level [%thread{10}] %logger{26}:%method-%line:%marker %msg%n" />
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${commonPattern}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="traceFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/learn-rk-trace.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>TRACE</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/bak/learn-rk-trace-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${filePattern}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="debugFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/learn-rk-debug.log</file>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/bak/learn-rk-debug-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${filePattern}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="infoFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/learn-rk-info.log</file>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/bak/learn-rk-info-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${filePattern}</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.twx.learn.rocketmq" level="debug" />
+
+    <!--root节点是必选节点，用来指定最基础的日志输出级别-->
+    <root level="INFO">
+        <appender-ref ref="console" />
+        <appender-ref ref="traceFile" />
+        <appender-ref ref="debugFile" />
+        <appender-ref ref="infoFile" />
+    </root>
+</configuration>
