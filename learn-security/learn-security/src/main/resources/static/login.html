@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+</head>
+<body>
+    <form action="/doLogin" method="post">
+        <div class="input">
+            <label for="name">用户名</label>
+            <input type="text" name="uname" id="name" value="javaboy">
+            <span class="spin"></span>
+        </div>
+        <div class="input">
+            <label for="pass">密码</label>
+            <input type="password" name="passwd" id="pass" value="123">
+            <span class="spin"></span>
+        </div>
+        <div class="button login">
+            <button type="submit">
+                <span>登录</span>
+                <i class="fa fa-check"></i>
+            </button>
+        </div>
+    </form>
+</body>
+</html>

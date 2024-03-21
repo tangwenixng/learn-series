@@ -1,0 +1,8 @@
+server:
+  port: 7001
+
+spring:
+  security:
+    user:
+      name: javaboy
+      password: 123
