@@ -1,4 +1,4 @@
-package com.soyuan.mh;
+package com.twx.learn.rocketmq.base;
 
 import org.apache.rocketmq.acl.common.AclClientRPCHook;
 import org.apache.rocketmq.acl.common.SessionCredentials;
@@ -8,7 +8,7 @@ import org.apache.rocketmq.common.message.Message;
 
 import java.time.LocalDateTime;
 
-public class BaseProducer {
+public class BaseAclProducer {
     public static void main(String[] args) {
 
         String accessKey = "rocketmq2";

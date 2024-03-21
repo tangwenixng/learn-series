@@ -1,0 +1,31 @@
+globalWhiteRemoteAddresses:
+  - 10.10.103.*
+  - 192.168.0.*
+  - 172.26.1.*
+  - 172.26.5.*
+  - 172.30.0.*
+
+accounts:
+  - accessKey: RocketMQ
+    secretKey: h837I@9h/r.dh07y9YC+PD2j@4.1oY9!-%cFW@TjuE-8/Va#tfK=6L5JaKyIbo80
+    whiteRemoteAddress:
+    admin: false
+    defaultTopicPerm: PUB|SUB
+    defaultGroupPerm: PUB|SUB
+    topicPerms:
+      - XIY-IMF-FLIGHT=PUB|SUB
+      - XIY-IMF-FLIGHT-REQE=PUB|SUB
+      - XIY-IMF-AOMS=PUB|SUB
+      - XIY-IMF-AOMS_REQE=PUB|SUB
+    groupPerms:
+      - SIMP-IMF-FLIGHT=PUB|SUB
+      - SIMP-IMF-FLIGHT-REQE=PUB|SUB
+      - SIMP-IMF-AOMS=PUB|SUB
+      - SIMP-IMF-AOMS_REQE=PUB|SUB
+
+  - accessKey: rocketmq2
+    secretKey: 12345678
+    whiteRemoteAddress:
+    # if it is admin, it could access all resources
+    admin: true
+
